@@ -10,6 +10,7 @@ document.querySelectorAll('.toggle-password').forEach(icon => {
             input.type = 'password';
             this.classList.remove('fa-eye-slash');
             this.classList.add('fa-eye');
+            
         }
     });
 });
