@@ -1,0 +1,15 @@
+app/views/customerView.php
+app/views/deliveryView.php
+app/views/salesView.php
+
+app/views/CustomerModel.php
+app/views/DeliveryModel.php
+app/views/SalesModel.php
+
+app/views/CustomerController.php
+app/views/DeliveryController.php
+app/views/SalesController.php
+
+app/views/customer.php
+app/views/delivery.php
+app/views/sales.php
