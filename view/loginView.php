@@ -36,6 +36,29 @@
          margin-bottom: 10px;
       }
    </style>
+
+   <script>
+      function validateForm() {
+         let password = document.getElementById('password').value.trim();
+         let email = document.getElementById('email').value.trim();
+
+         if (email === "") {
+            alert("Email cannot be empty");
+            return false;
+         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            alert("Invalid email format");
+            return false;
+         }
+         if (password === "") {
+            alert("Password cannot be empty");
+            return false;
+         } else if (password.length < 6) {
+            alert("Password must be at least 6 characters long");
+            return false;
+         }
+         return true;
+      }
+   </script>
 </head>
 
 <body>
@@ -44,14 +67,14 @@
       <?php if (!empty($error)): ?> <!-- Check if there's an error -->
          <div class="error"><?= htmlspecialchars($error); ?></div>
       <?php endif; ?>
-      <form method="post" action="../controller/loginController.php">
+      <form method="post" action="../controller/loginController.php" onsubmit="return validateForm()">
          <div class="form-group">
             <label>Email:</label>
-            <input type="email" name="email">
+            <input type="email" id="email" name="email">
          </div>
          <div class="form-group">
             <label>Password:</label>
-            <input type="password" name="password">
+            <input type="password" id="password" name="password">
          </div>
          <button type="submit" class="btn">Login</button>
       </form>
