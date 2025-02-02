@@ -24,70 +24,99 @@ $users = getById($userId, $conn);
     <title>Edit Profile - MediCare Plus</title>
     <link rel="stylesheet" type="text/css" href="../Style.css">
     <style>
+        .user-table {
+            width: 100%;
+            max-width: 600px;
+            border-collapse: collapse;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            /* Adds a blur effect for better aesthetics */
+        }
 
+        .user-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            /* Semi-transparent border */
+            font-size: 16px;
+            color: white;
+            /* Ensures the text is white */
+        }
 
-.user-table {
-    width: 100%;
-    max-width: 600px;
-    border-collapse: collapse;
-    margin: 20px auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    backdrop-filter: blur(10px); /* Adds a blur effect for better aesthetics */
-}
+        .user-table .label {
+            font-weight: bold;
+            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.3);
+            /* Semi-transparent background for labels */
+        }
 
-.user-table td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Semi-transparent border */
-    font-size: 16px;
-    color: white; /* Ensures the text is white */
-}
+        .user-table tr:last-child td {
+            border-bottom: none;
+        }
 
-.user-table .label {
-    font-weight: bold;
-    color: #ffffff;
-    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent background for labels */
-}
+        .profile-pic-cell {
+            text-align: center;
+            padding: 20px;
+        }
 
-.user-table tr:last-child td {
-    border-bottom: none;
-}
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #007bff;
+        }
 
-.profile-pic-cell {
-    text-align: center;
-    padding: 20px;
-}
+        .button-cell {
+            text-align: center;
+            padding: 15px;
+        }
 
-.profile-pic {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #007bff;
-}
+        .change-password-btn {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-.button-cell {
-    text-align: center;
-    padding: 15px;
-}
+        .change-password-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 
-.change-password-btn {
-    background-color: #007bff;
-    color: #ffffff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+    <script>
+        function validateForm() {
+            let name = document.getElementById('name').value.trim();
+            let email = document.getElementById('email').value.trim();
+            if (name === "") {
+                alert("Name cannot be empty");
+                return false;
+            } else if (name.split(" ").length < 2) {
+                alert("Name must contain at least two words");
+                return false;
+            } else if (!/^[a-zA-Z][a-zA-Z .'-]*$/.test(name)) {
+                alert("Name can only contain letters, dot, dash, or space");
+                return false;
+            }
 
-.change-password-btn:hover {
-    background-color: #0056b3;
-}
-</style>
+            if (email === "") {
+                alert("Email cannot be empty");
+                return false;
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert("Invalid email format");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </head>
 
 <body>
@@ -111,15 +140,15 @@ $users = getById($userId, $conn);
     <div class="banner">
         <div class="banner-content">
             <h1>Edit Your Profile</h1>
-            <form method="POST" action="../controller/editProfileCheck.php">
+            <form method="POST" action="../controller/editProfileCheck.php" onsubmit="return validateForm()">
                 <table class="user-table">
                     <tr>
                         <td class="label">Name</td>
-                        <td><input type="text" name="name" value="<?php echo htmlspecialchars($users['name']); ?>" required></td>
+                        <td><input type="text" id="name" name="name" value="<?php echo htmlspecialchars($users['name']); ?>" required></td>
                     </tr>
                     <tr>
                         <td class="label">Email</td>
-                        <td><input type="email" name="email" value="<?php echo htmlspecialchars($users['email']); ?>" required></td>
+                        <td><input type="email" id="email" name="email" value="<?php echo htmlspecialchars($users['email']); ?>" required></td>
                     </tr>
                     <tr>
                         <td colspan="2" class="button-cell">
